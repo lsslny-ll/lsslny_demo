@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick</IncludePath>
+              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick;..\user\uart</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -543,6 +543,16 @@
               <FileName>led_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\led\led_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\uart\uart_driver.c</FilePath>
             </File>
           </Files>
         </Group>
