@@ -1,20 +1,20 @@
 #include "stm32f10x.h"
 #include "led_driver.h"
 #include "sys_rcc.h"
+#include "systick.h"
 
-void delay(void)
+void bsp_init(void)
 {
-    int i;
-    for (i = 0; i < 0xfffff; i++);
+    RCC_DeInit();
+    RCC_Configuration();
+    systick_init(72);
+
+    Led_InitConfig();
 }
 
 int main(void)
 {
-    RCC_DeInit();
-    RCC_Configuration();
-    
-    Led_InitConfig();
-    
+    bsp_init();
     
     while(1)
     {
@@ -22,10 +22,10 @@ int main(void)
         Led_Ctrl(led1, led_on);
         Led_Ctrl(led2, led_on);
         Led_Ctrl(led3, led_on);
-        delay();
+        delay_ms(1000);
         Led_Ctrl(led1, led_off);
         Led_Ctrl(led2, led_off);
         Led_Ctrl(led3, led_off);
-        delay();
+        delay_ms(1000);
     }
 }
