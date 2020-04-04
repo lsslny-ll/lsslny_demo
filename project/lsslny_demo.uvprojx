@@ -51,7 +51,7 @@
           <OutputName>lsslny_demo</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led</IncludePath>
+              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -513,6 +513,16 @@
               <FileName>stm32f10x_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>RCC</GroupName>
+          <Files>
+            <File>
+              <FileName>sys_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\RCC\sys_rcc.c</FilePath>
             </File>
           </Files>
         </Group>

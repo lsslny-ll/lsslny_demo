@@ -1,14 +1,18 @@
 #include "stm32f10x.h"
 #include "led_driver.h"
+#include "sys_rcc.h"
 
 void delay(void)
 {
     int i;
-    for (i = 0; i < 0xffffff; i++);
+    for (i = 0; i < 0xfffff; i++);
 }
 
 int main(void)
 {
+    RCC_DeInit();
+    RCC_Configuration();
+    
     Led_InitConfig();
     
     
