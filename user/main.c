@@ -16,18 +16,12 @@ void bsp_init(void)
 
 int main(void)
 {
+    int num = 93;
+    
     bsp_init();
     
-    uart1_putc('H');
-    uart1_putc('e');
-    uart1_putc('l');
-    uart1_putc('l');
-    uart1_putc('o');
-    uart1_putc(' ');
-    
-    uart1_puts("world\r\n", 7);
-    
-    while (uart1_getc() != 'a');
+    PRINT("Well Come To Progream World!\r\n");
+    PRINT("printf: num = %d!\r\n", num);
     
     while(1)
     {

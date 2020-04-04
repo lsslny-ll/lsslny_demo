@@ -36,7 +36,7 @@ void uart_init(void)
 }
 
 // UART1发送一个字节数据
-char uart1_putc(char ch)
+static char uart1_putc(char ch)
 {
     USART_SendData(USART1, ch);
     while(USART_GetFlagStatus(USART1 ,USART_FLAG_TC) != SET);
@@ -54,7 +54,7 @@ uint16_t uart1_puts(unsigned char* buff, uint16_t len)
 }
 
 // UART1接收一个字节数据
-char uart1_getc(void)
+static char uart1_getc(void)
 {
     char ch = 0;
     while(USART_GetFlagStatus(USART1 ,USART_FLAG_RXNE) != SET);
@@ -72,3 +72,16 @@ uint16_t uart1_gets(unsigned char* buff, uint16_t len)
     return len;
 }
 
+// printf 的重映射输出
+int fputc(int ch, FILE *f)
+{
+    USART_SendData(USART1, (uint8_t)ch);
+    while(USART_GetFlagStatus(USART1 ,USART_FLAG_TC) == RESET);
+    return (ch);
+}
+
+int fgetc(FILE *f)
+{
+    while(USART_GetFlagStatus(USART1 ,USART_FLAG_RXNE) == RESET);
+    return (int)USART_ReceiveData(USART1);
+}
