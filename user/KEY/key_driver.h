@@ -5,11 +5,13 @@
 
 enum key_type
 {
-    KEY1,
-    KEY2
+    MSG_KEY1,
+    MSG_KEY2,
+    MSG_NONE = 0xFF
 };
 
 void key_init(void);
-uint8_t key_scan(enum key_type type);
+enum key_type get_key_type(void);
+void key_scan(enum key_type type);
 
 #endif

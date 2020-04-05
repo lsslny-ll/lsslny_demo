@@ -1,5 +1,7 @@
 #include "key_driver.h"
 #include "systick.h"
+#include "led_driver.h"
+#include "uart_driver.h"
 /* 
     KEY1    --  PA0     按下 高电平
     KEY2    --  PC13    按下 低电平
@@ -21,41 +23,48 @@ void key_init(void)
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
 
-uint8_t key_scan(enum key_type type)
+enum key_type get_key_type(void)
 {
-    uint8_t ret = 0;
-    
+    // KEY1 按下的电平为高
+    if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET)
+    {
+        delay_ms(20);   // 消抖
+        if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET)
+        {
+            // 等待按键释放
+            while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET);
+            // 表示按键被按下
+            return MSG_KEY1;
+        }
+    }
+    // KEY2 按下的电平为低
+    if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET)
+    {
+        delay_ms(20);   // 消抖
+        if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET)
+        {
+            while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET);
+            return MSG_KEY2;
+        }
+    }
+    return MSG_NONE;
+}
+
+void key_scan(enum key_type type)
+{
     switch(type)
     {
-        case KEY1:  // KEY1 按下的电平为高
-            if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET)
-            {
-                delay_ms(20);   // 消抖
-                if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET)
-                {
-                    // 等待按键释放
-                    while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == SET);
-                    // 表示按键被按下
-                    ret = 1;
-                }
-            }
+        case MSG_KEY1:  
+            DBG_I("KEY1 DOWN!\r\n");
+            Led_Ctrl(led1, led_on);
             break;
-        case KEY2:  // KEY2 按下的电平为低
-            if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET)
-            {
-                delay_ms(20);   // 消抖
-                if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET)
-                {
-                    while(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13) == RESET);
-                    ret = 1;
-                }
-            }
+        case MSG_KEY2:  
+            DBG_I("KEY2 DOWN!\r\n");
+            Led_Ctrl(led1, led_off);
             break;
         default:
             break;
     }
-    
-    return ret;
 }
 
 

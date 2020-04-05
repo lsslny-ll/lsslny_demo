@@ -29,26 +29,8 @@ int main(void)
     while(1)
     {
         // Add your code here.
-        if (key_scan(KEY1))
-        {
-            DBG_I("KEY1 DOWN!\r\n");
-            Led_Ctrl(led1, led_on);
-            delay_ms(1000);
-        }
-        else
-        {
-            DBG_W("KEY1 UP!\r\n");
-            Led_Ctrl(led1, led_off);
-        }
-        if (key_scan(KEY2))
-        {
-            Led_Ctrl(led2, led_on);
-            delay_ms(1000);
-        }
-        else
-        {
-            Led_Ctrl(led2, led_off);
-        }
+        
+        key_scan(get_key_type());
         //Led_Ctrl(led1, led_on);
         //Led_Ctrl(led2, led_on);
         //Led_Ctrl(led3, led_on);
