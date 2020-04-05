@@ -3,6 +3,7 @@
 #include "sys_rcc.h"
 #include "systick.h"
 #include "uart_driver.h"
+#include "key_driver.h"
 
 void bsp_init(void)
 {
@@ -11,6 +12,8 @@ void bsp_init(void)
     systick_init(72);
 
     Led_InitConfig();
+    key_init();
+    
     uart_init();
 }
 
@@ -26,13 +29,31 @@ int main(void)
     while(1)
     {
         // Add your code here.
-        Led_Ctrl(led1, led_on);
+        if (key_scan(KEY1))
+        {
+            Led_Ctrl(led1, led_on);
+            delay_ms(1000);
+        }
+        else
+        {
+            Led_Ctrl(led1, led_off);
+        }
+        if (key_scan(KEY2))
+        {
+            Led_Ctrl(led2, led_on);
+            delay_ms(1000);
+        }
+        else
+        {
+            Led_Ctrl(led2, led_off);
+        }
+        //Led_Ctrl(led1, led_on);
         //Led_Ctrl(led2, led_on);
         //Led_Ctrl(led3, led_on);
-        delay_ms(1000);
-        Led_Ctrl(led1, led_off);
+        //delay_ms(1000);
+        //Led_Ctrl(led1, led_off);
         //Led_Ctrl(led2, led_off);
         //Led_Ctrl(led3, led_off);
-        delay_ms(1000);
+        //delay_ms(1000);
     }
 }
