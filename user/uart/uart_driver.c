@@ -1,7 +1,24 @@
 #include "uart_driver.h"
+#include <string.h>
+
+
+int8_t Usart1Buff[USART1_BUFF] = {0};
+USARTRecvData Usart1RecvStat = {
+    0,
+    &Usart1Buff[0],
+    &Usart1Buff[0]
+};
+
+void clear_usart_buff(void)
+{
+    memset((int8_t*)Usart1Buff, (int8_t)0, USART1_BUFF);
+    Usart1RecvStat.RecvCnt = 0;
+    Usart1RecvStat.Recv_start = &Usart1Buff[0];
+    Usart1RecvStat.Recv_end   = &Usart1Buff[0];
+}
 
 // UART 初始化
-void uart_init(void)
+void uart1_config(void)
 {
     GPIO_InitTypeDef  GPIO_InitStructure;
     USART_InitTypeDef USART_InitStructure;
@@ -29,14 +46,37 @@ void uart_init(void)
     USART_InitStructure.USART_Mode          = USART_Mode_Rx | USART_Mode_Tx;
     USART_Init(USART1, &USART_InitStructure);
     
+    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+    
     USART_ClearFlag(USART1, USART_FLAG_TC);
 
     // 开启UART
     USART_Cmd(USART1, ENABLE);
 }
 
+void uart1_nvic_config(void)
+{
+    NVIC_InitTypeDef NVIC_InitStructure;
+    
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    
+    NVIC_InitStructure.NVIC_IRQChannel      = USART1_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority    = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority           = 7;
+    NVIC_InitStructure.NVIC_IRQChannelCmd   = ENABLE;
+    
+    NVIC_Init(&NVIC_InitStructure);
+}
+
+void uart_init_config(void)
+{
+    uart1_config();
+    uart1_nvic_config();
+    
+}
+
 // UART1发送一个字节数据
-static char uart1_putc(char ch)
+char uart1_putc(char ch)
 {
     USART_SendData(USART1, ch);
     while(USART_GetFlagStatus(USART1 ,USART_FLAG_TC) != SET);
@@ -84,4 +124,16 @@ int fgetc(FILE *f)
 {
     while(USART_GetFlagStatus(USART1 ,USART_FLAG_RXNE) == RESET);
     return (int)USART_ReceiveData(USART1);
+}
+
+extern uint8_t ReadUsartBack;
+void USART_ReadData_String(void)
+{
+    if (ReadUsartBack)
+    {
+        ReadUsartBack = 0;
+        printf("\r\n%s\r\n", Usart1RecvStat.Recv_start);
+        printf("+++++\r\n");
+        clear_usart_buff();
+    }
 }

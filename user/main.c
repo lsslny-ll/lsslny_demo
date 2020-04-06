@@ -14,7 +14,8 @@ void bsp_init(void)
     Led_InitConfig();
     key_init();
     
-    uart_init();
+    //uart1_config();
+    uart_init_config();
 }
 
 int main(void)
@@ -31,6 +32,7 @@ int main(void)
         // Add your code here.
         
         key_scan(get_key_type());
+        USART_ReadData_String();
         //Led_Ctrl(led1, led_on);
         //Led_Ctrl(led2, led_on);
         //Led_Ctrl(led3, led_on);

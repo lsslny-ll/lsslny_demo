@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
+#include "uart_driver.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -136,6 +137,37 @@ void SysTick_Handler(void)
 {
 }
 
+/**
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
+uint8_t ReadUsartBack = 0;
+void USART1_IRQHandler(void)
+{
+    if (USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
+    {
+        USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+        //*Usart1RecvStat.Recv_end = USART_ReceiveData(USART1);
+        *Usart1RecvStat.Recv_end = USART1->DR;
+        
+        if ((*Usart1RecvStat.Recv_end) == '\r')
+        {
+            ReadUsartBack = 1;
+        }
+        
+        Usart1RecvStat.Recv_end++;
+        Usart1RecvStat.RecvCnt++;
+
+        if (USART1_BUFF <= Usart1RecvStat.RecvCnt)
+        {
+            Usart1RecvStat.RecvCnt = 0;
+            Usart1RecvStat.Recv_end = &Usart1Buff[0];
+        }
+        // »ØÏÔ
+        uart1_putc(*(Usart1RecvStat.Recv_end - 1));
+    }
+}
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
