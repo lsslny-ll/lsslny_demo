@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick;..\user\uart;..\user\KEY</IncludePath>
+              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick;..\user\uart;..\user\KEY;..\user\TIM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -536,6 +536,16 @@
               <FileName>systick.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\systick\systick.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Tim6</GroupName>
+          <Files>
+            <File>
+              <FileName>tim6_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\TIM\tim6_driver.c</FilePath>
             </File>
           </Files>
         </Group>

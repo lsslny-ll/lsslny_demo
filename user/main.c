@@ -4,12 +4,14 @@
 #include "systick.h"
 #include "uart_driver.h"
 #include "key_driver.h"
+#include "tim6_driver.h"
 
 void bsp_init(void)
 {
     RCC_DeInit();
     RCC_Configuration();
     systick_init(72);
+    tim6_init();
 
     Led_InitConfig();
     key_init();

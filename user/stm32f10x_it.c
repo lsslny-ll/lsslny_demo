@@ -168,6 +168,26 @@ void USART1_IRQHandler(void)
         uart1_putc(*(Usart1RecvStat.Recv_end - 1));
     }
 }
+
+/**
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
+uint16_t time_cnt = 0;
+void TIM6_IRQHandler(void)
+{
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) == SET)
+    {
+        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+        time_cnt++;
+        if (time_cnt >= 499)
+        {
+            time_cnt = 0;
+            printf("TIM6 time is over!!\r\n");
+        }
+    }
+}
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
