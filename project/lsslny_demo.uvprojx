@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick;..\user\uart;..\user\KEY;..\user\TIM</IncludePath>
+              <IncludePath>..\libraries\STM32F10x_StdPeriph_Driver\inc;..\libraries\CMSIS;..\user;..\user\led;..\user\RCC;..\user\systick;..\user\uart;..\user\KEY;..\user\TIM;..\user\ADC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -566,6 +566,16 @@
               <FileName>key_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\KEY\key_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Adc</GroupName>
+          <Files>
+            <File>
+              <FileName>adc_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\ADC\adc_driver.c</FilePath>
             </File>
           </Files>
         </Group>

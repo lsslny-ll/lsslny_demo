@@ -5,6 +5,7 @@
 #include "uart_driver.h"
 #include "key_driver.h"
 #include "tim6_driver.h"
+#include "adc_driver.h"
 
 void bsp_init(void)
 {
@@ -18,6 +19,7 @@ void bsp_init(void)
     
     //uart1_config();
     uart_init_config();
+    adc_init();
 }
 
 int main(void)
@@ -32,9 +34,11 @@ int main(void)
     while(1)
     {
         // Add your code here.
-        
+        delay_ms(1000);
         key_scan(get_key_type());
         USART_ReadData_String();
+        delay_ms(1000);
+        printf("ADC Channel10 Value£º %d  ,Vch10: %.3fV!!\r\n", Get_Adc(), Get_AdcMath());
         //Led_Ctrl(led1, led_on);
         //Led_Ctrl(led2, led_on);
         //Led_Ctrl(led3, led_on);
