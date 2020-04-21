@@ -540,6 +540,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>I2c</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\I2C\i2c_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Tim6</GroupName>
           <Files>
             <File>
