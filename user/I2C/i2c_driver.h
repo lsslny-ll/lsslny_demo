@@ -3,6 +3,10 @@
 
 #include "stm32f10x.h"
 
+#define I2C_WR  0   // 写控制位
+#define I2C_RD  1   // 读控制位
+
+
 /*
     硬件接口：
     PB6     --      SCL1
@@ -15,9 +19,13 @@
 void i2c_gpio_init(void);
 void i2c_start(void);
 void i2c_stop(void);
+
 uint8_t i2c_recv_ack(void);
 void i2c_send_ack(uint8_t nack);
+
 void i2c_send_byte(uint8_t ch);
 uint8_t i2c_recv_byte(void);
+
+uint8_t i2c_CheckDevice(uint8_t _Address);
 
 #endif

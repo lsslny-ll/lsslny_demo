@@ -184,7 +184,7 @@ void TIM6_IRQHandler(void)
         if (time_cnt >= 499)
         {
             time_cnt = 0;
-            printf("TIM6 time is over!!\r\n");
+            //printf("TIM6 time is over!!\r\n");
         }
     }
 }

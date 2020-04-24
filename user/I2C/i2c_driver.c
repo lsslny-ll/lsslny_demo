@@ -171,7 +171,21 @@ uint8_t i2c_recv_byte(void)
     return ret;
 }
 
-
+// 检测IIC总线设备
+uint8_t i2c_CheckDevice(uint8_t _Address)
+{
+    uint8_t ucAck;
+    
+    i2c_start();
+    
+    // 发送设备地址+读写控制bit(0 = W, 1 = R)bit7 先传
+    i2c_send_byte(_Address | I2C_WR);
+    ucAck = i2c_recv_ack(); // 检测设备的ACK应答
+    
+    i2c_stop();
+    
+    return ucAck;
+}
 
 
 
